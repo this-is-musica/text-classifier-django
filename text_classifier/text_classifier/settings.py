@@ -20,9 +20,6 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "!_(i&oqr7b%3=u&4)p+xx%s8*$q6362y$y8ps66e&*2rh@xjs#"
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
