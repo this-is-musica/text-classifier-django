@@ -29,6 +29,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = (
+    'money_maker.apps.MoneyMakerConfig'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
