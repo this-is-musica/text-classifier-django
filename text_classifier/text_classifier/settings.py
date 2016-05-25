@@ -16,6 +16,7 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -26,14 +27,14 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = (
-    'money_maker.apps.MoneyMakerConfig'
+    'money_maker.apps.MoneyMakerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    # 'rest_framework',
 )
 
 REST_FRAMEWORK = {
