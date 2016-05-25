@@ -8,3 +8,4 @@ __pycache__
 .ipynb_checkpoints
 .env
 text_classifier/.env
+SongLyricsTop20_json.json
