@@ -1,6 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 
-
-class HomeView(TemplateView):
-    template_name = "money_maker/home.html"
+def index(request):
+    return HttpResponse("Hello, world.")
