@@ -4,11 +4,26 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import os
 import functools
+import pickle
+from .models import Classifier
 
 
-@functools.lru_cache(maxsize=2)
+def get_or_make_classifier_and_counter(name):
+    try:
+        pickled_classifier_and_counter = Classifier.objects.get(name=name)
+        classifier = pickle.loads(pickled_classifier_and_counter.classifier)
+        counter = pickle.loads(pickled_classifier_and_counter.counter)
+    except Classifier.DoesNotExist:
+        classifier, counter = _make_classifier_and_counter()
+        classifier_and_counter = Classifier()
+        classifier_and_counter.classifier = pickle.dumps(classifier)
+        classifier_and_counter.counter = pickle.dumps(counter)
+        classifier_and_counter.name = name
+        classifier_and_counter.save()
+    return classifier, counter
+
+
 def _make_classifier_and_counter(music_folder="data/music/"):
-    print(os.getcwd())
     ided_songs = read_lyrics(music_folder)
     song_list = [song['lyrics'] for song in ided_songs]
     genre_list = [song['genre'] for song in ided_songs]
@@ -47,9 +62,5 @@ def read_lyrics(music_folder="../data/music/"):
     return ided_songs
 
 def classify_lyrics(lyrics):
-    classifier, counter = _make_classifier_and_counter()
-<<<<<<< HEAD
-    return classifier.predict(counter.transform([lyrics]))
-=======
+    classifier, counter = get_or_make_classifier_and_counter("Full")
     return classifier.predict(counter.transform([lyrics]))[0]
->>>>>>> 73f03e2b28de177b63de05d66eadbed21d198f18

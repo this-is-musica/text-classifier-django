@@ -17,4 +17,4 @@ def test(request):
 
 def display_genre(request, genre):
     context = {"genre": genre}
-    return render(request, 'money_maker/index', context)
+    return render(request, 'money_maker/index.html', context)
