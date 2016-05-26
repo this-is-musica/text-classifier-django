@@ -48,4 +48,4 @@ def read_lyrics(music_folder="../data/music/"):
 
 def classify_lyrics(lyrics):
     classifier, counter = _make_classifier_and_counter()
-    return str(classifier.predict(counter.transform([lyrics])))
+    return classifier.predict(counter.transform([lyrics]))[0]
