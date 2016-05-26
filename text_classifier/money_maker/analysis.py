@@ -8,6 +8,20 @@ import functools
 
 @functools.lru_cache(maxsize=2)
 def _make_classifier_and_counter(music_folder="../data/music/"):
+    ided_songs = read_lyrics(music_folder)
+    song_list = [song['lyrics'] for song in ided_songs]
+    genre_list = [song['genre'] for song in ided_songs]
+    word_counter = TfidfVectorizer()
+    counted_by_words = word_counter.fit_transform(song_list)
+    # classifier_by_words = MultinomialNB()
+    forest_classifier = RandomForestClassifier(n_estimators=50)
+    forest_classifier.fit(counted_by_words, genre_list)
+    # classifier_by_words.fit(counted_by_words, genre_list)
+    # print(word_counter.get_feature_names())
+    return (forest_classifier, word_counter)
+
+
+def read_lyrics(music_folder="../data/music/"):
     genre_folders = os.listdir(music_folder)
     ided_songs = []
     for folder in genre_folders:
@@ -29,17 +43,7 @@ def _make_classifier_and_counter(music_folder="../data/music/"):
             this_song['lyrics'] = '\n'.join(song_lyrics)
             this_song['genre'] = folder
             ided_songs.append(this_song)
-    song_list = [song['lyrics'] for song in ided_songs]
-    genre_list = [song['genre'] for song in ided_songs]
-    word_counter = TfidfVectorizer()
-    counted_by_words = word_counter.fit_transform(song_list)
-    # classifier_by_words = MultinomialNB()
-    forest_classifier = RandomForestClassifier(n_estimators=50)
-    forest_classifier.fit(counted_by_words, genre_list)
-    # classifier_by_words.fit(counted_by_words, genre_list)
-    # print(word_counter.get_feature_names())
-    return (forest_classifier, word_counter)
-
+    return ided_songs
 
 def classify_lyrics(lyrics):
     classifier, counter = _make_classifier_and_counter()
