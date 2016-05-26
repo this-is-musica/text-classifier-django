@@ -7,7 +7,8 @@ import functools
 
 
 @functools.lru_cache(maxsize=2)
-def _make_classifier_and_counter(music_folder="../data/music/"):
+def _make_classifier_and_counter(music_folder="data/music/"):
+    print(os.getcwd())
     ided_songs = read_lyrics(music_folder)
     song_list = [song['lyrics'] for song in ided_songs]
     genre_list = [song['genre'] for song in ided_songs]

@@ -4,6 +4,8 @@ from . import analysis
 
 
 def index(request):
+    if request.method == "POST":
+        return HttpResponse(analysis.classify_lyrics(request.POST.get('name','')))
     return render(request, 'money_maker/index.html')
 
 
